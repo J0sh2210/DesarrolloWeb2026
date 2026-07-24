@@ -76,9 +76,53 @@ export function parseUrl(url: string): UrlParts {
  *
  * Pista: un único `if / else if` con comparaciones de rangos basta.
  */
+/**
+ * Clasifica un código de estado HTTP en su categoría correspondiente.
+ *
+ * @param code - Código de estado HTTP (ej. 200, 404).
+ * @returns La categoría del estado en formato string.
+ */
 export function classifyStatus(code: number): StatusCategory {
-  // TODO: tu implementación aquí
-  throw new Error("Not implemented");
+  if (code >= 100 && code <= 199) return "1xx Informativo";
+  if (code >= 200 && code <= 299) return "2xx Éxito";
+  if (code >= 300 && code <= 399) return "3xx Redirección";
+  if (code >= 400 && code <= 499) return "4xx Error del cliente";
+  if (code >= 500 && code <= 599) return "5xx Error del servidor";
+  
+  return "Desconocido";
+}
+
+/**
+ * Parsea un texto con líneas de cabeceras HTTP a un objeto Record<string, string>.
+ * Ignora líneas vacías o sin formato válido.
+ *
+ * @param text - Texto bruto de las cabeceras.
+ * @returns Objeto con los nombres de cabecera como clave y sus valores.
+ */
+export function parseHeaders(text: string): Headers {
+  const result: Headers = {};
+  
+  // 1. Separamos el texto por saltos de línea
+  const lines = text.split("\n");
+
+  for (const line of lines) {
+    // 2. Buscamos la posición del primer ":"
+    const separatorIndex = line.indexOf(":");
+    
+    // 3. Ignoramos líneas que no tengan ":" (esto también filtra líneas vacías)
+    if (separatorIndex === -1) {
+      continue;
+    }
+
+    // 4. Extraemos nombre y valor, y recortamos los espacios sobrantes
+    const key = line.slice(0, separatorIndex).trim();
+    const value = line.slice(separatorIndex + 1).trim();
+
+    // 5. Asignamos al objeto resultado
+    result[key] = value;
+  }
+
+  return result;
 }
 
 /**
@@ -97,10 +141,7 @@ export function classifyStatus(code: number): StatusCategory {
  * Pista: `text.split("\n")` te da las líneas; `String.split(":")` te separa
  * nombre y valor. Recuerda `.trim()` para quitar espacios sobrantes.
  */
-export function parseHeaders(text: string): Headers {
-  // TODO: tu implementación aquí
-  throw new Error("Not implemented");
-}
+
 
 /**
  * TODO: Combina las funciones anteriores en un resumen legible.
