@@ -91,6 +91,34 @@ export function classifyStatus(code: number): StatusCategory {
   
   return "Desconocido";
 }
+/**
+ * Combina las funciones anteriores en un resumen legible de la petición.
+ *
+ * @param url - La URL solicitada.
+ * @param status - El código de estado HTTP.
+ * @param headersText - El texto de las cabeceras a parsear.
+ * @returns Un string formateado con el resumen de la petición.
+ */
+export function summarizeRequest(
+  url: string,
+  status: number,
+  headersText: string,
+): string {
+  const category = classifyStatus(status);
+  const headers = parseHeaders(headersText);
+
+  let summary = "Resumen de la petición\n";
+  summary += "──────────────────────\n";
+  summary += `URL:     ${url}\n`;
+  summary += `Status:  ${status} (${category})\n`;
+  summary += "Headers:\n";
+
+  for (const key in headers) {
+    summary += `  • ${key}: ${headers[key]}\n`;
+  }
+
+  return summary;
+}
 
 /**
  * Parsea un texto con líneas de cabeceras HTTP a un objeto Record<string, string>.
@@ -125,52 +153,9 @@ export function parseHeaders(text: string): Headers {
   return result;
 }
 
-/**
- * TODO: Parsea un texto con líneas de cabeceras HTTP al formato
- * `Record<string, string>`. El separador entre nombre y valor es ":".
- *
- * Reglas:
- *   - Cada línea no vacía debe tener formato "Nombre: valor".
- *   - Ignora líneas vacías o que no contengan ":".
- *   - No tienes que normalizar mayúsculas/minúsculas del nombre.
- *
- * Ejemplo:
- *   parseHeaders("Content-Type: application/json\nAuthorization: Bearer abc")
- *   → { "Content-Type": "application/json", "Authorization": "Bearer abc" }
- *
- * Pista: `text.split("\n")` te da las líneas; `String.split(":")` te separa
- * nombre y valor. Recuerda `.trim()` para quitar espacios sobrantes.
- */
+const isMain = typeof require !== 'undefined' && require.main === module || process.argv[1]?.includes('index.ts');
 
-
-/**
- * TODO: Combina las funciones anteriores en un resumen legible.
- *
- * El formato exacto lo decides tú (los tests solo verifican que el string
- * no esté vacío y que contenga la URL y el código). Un ejemplo:
- *
- *   Resumen de la petición
- *   ──────────────────────
- *   URL:     https://api.ejemplo.com/users
- *   Status:  200 (2xx Éxito)
- *   Headers:
- *     • Content-Type: application/json
- *     • Authorization: Bearer abc
- */
-export function summarizeRequest(
-  url: string,
-  status: number,
-  headersText: string,
-): string {
-  // TODO: tu implementación aquí
-  throw new Error("Not implemented");
-}
-
-// ---------------------------------------------------------------------------
-// CLI (opcional, pero recomendado para probar manualmente)
-// ---------------------------------------------------------------------------
-
-if (require.main === module) {
+if (isMain) {
   const [, , cmd, ...args] = process.argv;
   try {
     if (cmd === "parse-url" && args[0]) {
@@ -197,3 +182,5 @@ if (require.main === module) {
     process.exit(1);
   }
 }
+
+
