@@ -1,24 +1,114 @@
-.producto img{
-    width: 200px;
-    height: auto;
+/* Reset y estilos base */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
-/* TODO: Reset y estilos base */
 
-/* TODO: Galería de productos */
-/* Desktop (>=1024px): 3 columnas usando CSS Grid */
-/* Mobile (<768px): 1 columna con scroll vertical */
+body {
+    font-family: sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    padding: 20px;
+}
 
-/* TODO: Estilo de cada tarjeta de producto */
-/* - Imagen ocupa el ancho completo de la tarjeta */
-/* - Nombre del producto en negrita */
-/* - Precio destacado */
-/* - Botón "Comprar" estilizado con hover effect */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
 
-/* TODO: To-Do List */
-/* - Lista sin marcadores (list-style: none) */
-/* - Checkbox con label accesible */
-/* - Tareas alternadas con color de fondo (zebra striping) */
+h1, h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #222;
+}
 
-/* TODO: Diseño responsivo */
-/* - Usar @media queries para cambiar entre mobile y desktop */
-/* - La galería debe ser responsiva usando Grid + media queries */
+/* Estilo de cada tarjeta de producto */
+.producto {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* Imagen ocupa el ancho completo de la tarjeta */
+.producto img {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.producto-info h2 {
+    font-size: 1.2rem;
+    margin: 15px 0 10px;
+}
+
+/* Precio destacado */
+.precio {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+/* Botón "Comprar" estilizado */
+.btn-comprar {
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+/* To-Do List */
+.todo-list {
+    max-width: 600px;
+    margin: 40px auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    overflow: hidden;
+}
+
+/* Lista sin marcadores */
+.tareas {
+    list-style: none;
+}
+
+.tarea {
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.tarea:last-child {
+    border-bottom: none;
+}
+
+/* Checkbox con label accesible */
+.tarea input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.tarea label {
+    cursor: pointer;
+    font-size: 1rem;
+    user-select: none;
+}
+
+/* Tareas alternadas con color de fondo (zebra striping) */
+.tarea:nth-child(even) {
+    background-color: #f9f9f9;
+}
