@@ -68,6 +68,27 @@ h1, h2 {
     transition: background-color 0.3s ease;
 }
 
+.btn-comprar:hover {
+    background-color: #1e8449;
+}
+
+/* Galería con CSS Grid - Desktop: 3 columnas */
+.galeria {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+/* Mobile: 1 columna con scroll vertical */
+@media (max-width: 767px) {
+    .galeria {
+        grid-template-columns: 1fr;
+        overflow-y: auto;
+        max-height: 80vh;
+    }
+}
+
 /* To-Do List */
 .todo-list {
     max-width: 600px;
